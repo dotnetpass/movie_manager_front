@@ -1,0 +1,135 @@
+@import "../global";
+
+.hd {
+  background: linear-gradient(@primary-color, #7edfff);
+  height: 70px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  transition: all 1s;
+}
+
+.header {
+  background-color: black;
+  height: 280px;
+  overflow: hidden;
+  margin-bottom: -140px;
+  position: relative;
+
+}
+
+.headerImg {
+  height: 60vw;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+}
+
+.headerContent {
+  height: 140px;
+  transform: translateZ(0);
+  color: white;
+  width: 1000px;
+  margin-left: calc(50vw - 500px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: 1000px) {
+    & {
+      width: 100vw;
+      margin-left: 0;
+    }
+  }
+  .search {
+    display: flex;
+    font-weight: lighter;
+    font-size: 20px;
+    align-items: center;
+    cursor: pointer;
+    .searchItem {
+      transition: all .2s;
+      color: rgba(255,255,255,0.5);
+      &:hover {
+        font-size: 28px;
+        font-weight: normal;
+      }
+    }
+    .searchItem:not(:last-child) {
+      margin-right: 20px;
+    }
+    .active {
+      color: white;
+      font-size: 32px;
+    }
+
+  }
+  .searchBar {
+    margin-top: 20px;
+    max-width: 600px;
+    width: 100%;
+  }
+}
+
+
+.content {
+  margin-bottom: 20px;
+  color: white;
+  width: 1000px;
+  margin-left: calc(50vw - 500px);
+  @media (max-width: 1000px) {
+    & {
+      width: 100vw;
+      margin-left: 0;
+    }
+  }
+  .contentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.main {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 1000px;
+  margin-left: calc(50vw - 500px);
+  @media (max-width: 1000px) {
+    & {
+      width: 100vw;
+      margin-left: 0;
+    }
+  }
+  .head {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    justify-content: space-between;
+    line-height: 36px;
+    height: 36px;
+    font-size: 22px;
+    color: #ac403e;
+    padding-left: 5px;
+    border-bottom: #ac403e 1px solid;
+    margin-bottom: 15px;
+  }
+  .headIcon {
+    font-size: 45px;
+    padding-right: 10px;
+    transform: rotate(-30deg);
+  }
+  .infoItem {
+    margin-bottom: 10px;
+    justify-content: space-between;
+    display: flex;
+    .left {
+      width: 95px;
+      margin-left: 5px;
+      font-weight: bold;
+    }
+    .right {
+      width: 200px;
+    }
+  }
+}

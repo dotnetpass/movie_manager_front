@@ -1,0 +1,105 @@
+.card {
+  cursor: pointer;
+  margin-bottom: 20px;
+  position: relative;
+  height: 230px;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(1.02);
+    .like {
+      visibility: visible;
+    }
+    .name {
+      background: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1));
+    }
+  }
+  @media (max-width: 1000px) {
+    & {
+      height: calc(25.6vw - 25.6px);
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 768px) {
+    & {
+      height: calc(36vw - 20px);
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 574px) {
+    & {
+      height: calc(49vw - 20px);
+      margin-left: 0;
+    }
+  }
+}
+.img {
+  width: 100%;
+  border-radius: 4px;
+  height: 100%;
+}
+.name {
+  position: absolute;
+  bottom: 0;
+  padding-left: 8px;
+  padding-right: 8px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  width: 100%;
+  background: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,0.6));
+  white-space: nowrap;
+  color: white;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 40px;
+  text-overflow:ellipsis;
+}
+.score {
+  position: absolute;
+  bottom: 34px;
+  left: 10px;
+  color: #333333;
+  background: rgba(255,201,20,1);
+  padding: 2px 4px;
+  font-size: 12px;
+  line-height: 12px;
+  border-radius: 4px;
+}
+.like {
+  position: absolute;
+  visibility: hidden;
+  bottom: 32px;
+  right: 10px;
+  color: rgba(255,201,20,1);
+  font-size: 20px;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.tags {
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  color: rgba(255,255,255,0.5);
+  left: 0;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  line-height: 18px;
+  padding-left: 5px;
+  padding-right: 5px;
+  .tag {
+    cursor: pointer;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    padding: 3px 4px;
+    margin-right: 4px;
+    transition: all 1s;
+  }
+  .tag:hover {
+    opacity: 0.7;
+  }
+}
