@@ -111,7 +111,7 @@ class MoviePage extends PureComponent {
         const img = current.img && current.img.replace("w.h", '600.800');
 
         const loadMore =
-            comments.page < comments.totalPage ? (
+            comments && comments.page < comments.totalPage ? (
                 loading ? <Spin style={{
                         marginLeft: 330,
                         marginTop: 12
@@ -128,7 +128,7 @@ class MoviePage extends PureComponent {
                     </div>
             ) : null;
 
-        const commentsBlock = <List
+        const commentsBlock = comments ? <List
             loading={loading}
             loadMore={loadMore}
             itemLayout="horizontal"
@@ -159,7 +159,7 @@ class MoviePage extends PureComponent {
                     }
                 />
             )}
-        />
+        /> : null;
 
 
         return (
@@ -190,9 +190,9 @@ class MoviePage extends PureComponent {
                         </div>
                         <div className={styles.funcbar}>
                             <div className={styles.score}>
-                                <Rate allowHalf className={styles.scores} defaultValue={current.score / 2} disabled/>
+                                <Rate allowHalf className={styles.scores} defaultValue={Math.floor(current.score) / 2} disabled/>
                                 <span className={styles.scoreNum}>{current.score || 0}</span>&nbsp;&nbsp;/10
-                                <span className={styles.scoreCount}>{(current.scoreCount || 0)} 人参与评分</span>
+                                <span className={styles.scoreCount}>{(current.score_count || 0)} 人参与评分</span>
                             </div>
                             {user?
                             <div className={styles.funcbarRight}>
@@ -208,7 +208,7 @@ class MoviePage extends PureComponent {
                             <Icon className={styles.headIcon} type="container"/>
                         </div>
                         <div className={styles.comments}>
-                            {commentsBlock}
+                            {comments?commentsBlock:null}
                         </div>
                     </div>
                     <div className={styles.right}>
@@ -225,7 +225,7 @@ class MoviePage extends PureComponent {
                         </div>
                         <div className={styles.infoItem}>
                             <div className={styles.left}>上映日期</div>
-                            <div className={styles.right}>{current.release_day || ''}</div>
+                            <div className={styles.right}>{current.release_day?moment(current.release_day).format('YYYY-MM-DD') : ''}</div>
                         </div>
                         <div className={styles.infoItem}>
                             <div className={styles.left}>语&nbsp;&nbsp;&nbsp;言</div>

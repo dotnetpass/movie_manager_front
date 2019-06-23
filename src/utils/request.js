@@ -129,7 +129,8 @@ export default function request(url, options) {
         }
     }
     if (!newOptions.notRequireAuth) {
-        const authQuery = {uid: localStorage.getItem('id')};
+        //const authQuery = {uid: localStorage.getItem('id')};
+        const authQuery = {};
         const query = newOptions.query ? {...newOptions.query, ...authQuery} : authQuery;
         fetchUrl = query ? (url + '?' + urlEncode(query)) : url;
     }

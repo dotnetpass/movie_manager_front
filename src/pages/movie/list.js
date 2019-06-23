@@ -16,10 +16,10 @@ const typeOptions = {
 }
 
 const sortByOptions = {
-    scoreCount: '人气从高到低',
+    // scoreCount: '人气从高到低',
     score: '评分从高到低',
-    releaseDay: '上映从近到远',
-    name: '按电影名排序',
+    date: '上映从近到远',
+    // name: '按电影名排序',
 
 }
 
@@ -31,6 +31,13 @@ class Movie extends PureComponent {
             type: undefined,
             query: undefined,
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('next', nextProps)
+        if (nextProps.location.query.type !== this.props.location.query.type || nextProps.location.query.query !== this.props.location.query.query) {
+            this.loadMovies(1, 24, nextProps.location.query.type, nextProps.location.query.query);
+        }
     }
 
     handleEditInput = (name, e) => {
@@ -46,7 +53,7 @@ class Movie extends PureComponent {
     }
 
     changeSortBy = (sort_by) => {
-        this.loadMovies(null, null, null, null, sort_by)
+        this.loadMovies(undefined,undefined,undefined,undefined, sort_by)
     }
 
     componentDidMount() {
@@ -54,7 +61,7 @@ class Movie extends PureComponent {
         window.addEventListener('scroll', (e) => {
             _this.handleScroll(e);
         });
-        this.loadMovies(1, 12);
+        this.loadMovies(1, 24);
     }
 
     handleLike = (id) => {
@@ -82,12 +89,13 @@ class Movie extends PureComponent {
 
 
     loadMovies = (page = this.props.movie.page, pageSize = this.props.movie.pageSize, type = this.props.location.query.type || 'name',
-                  query = this.props.location.query.query || '', sort_by = this.props.movie.query.sort_by || 'scoreCount') => {
+                  query = this.props.location.query.query || '', sort_by = this.props.movie.query.sort_by || 'score') => {
         this.props.dispatch({
             type: 'movie/fetch', payload: {
-                type, query, sort_by
+                query: {type, query, sort_by}, page, pageSize
             }
         });
+        console.log({ query: {type, query, sort_by}, page, pageSize})
     };
 
     onLoadMore = () => {
@@ -106,7 +114,7 @@ class Movie extends PureComponent {
         const img = Array.isArray(movie.data) && movie.data[0] && movie.data[0].img && movie.data[0].img.replace("w.h", '600.800');
 
         const menu = <Menu>
-            {Object.entries(sortByOptions).map(([e, f]) => <Menu.Item key={e} onClick={()=>this.changeSortBy(e)}>
+            {Object.entries(sortByOptions).map(([e, f]) => <Menu.Item key={e} onClick={() => this.changeSortBy(e)}>
                 {f}
             </Menu.Item>)}
         </Menu>
@@ -158,11 +166,11 @@ class Movie extends PureComponent {
             <div className={styles.content}>
                 <div className={styles.contentHeader}>
                     <PageHeader onBack={() => router.goBack()}
-                                title={`${movie.query.query || ''}（按${typeOptions[movie.query.type || 'name']}查找）`}
+                                title={`${movie.query.query || ''}（按${typeOptions[movie.query.type || 'score']}查找）`}
                                 subTitle={`共找到 ${movie.count || 0} 条结果`}/>
                     <Dropdown overlay={menu} trigger={['click']}>
                         <a>
-                            {sortByOptions[movie.query.sort_by || 'scoreCount']} <Icon type="down"/>
+                            {sortByOptions[movie.query.sort_by || 'score']} <Icon type="down"/>
                         </a>
                     </Dropdown></div>
                 <MovieList data={movie.data} loading={movie.loading} loadMore={loadMore} like={this.handleLike}/>

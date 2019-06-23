@@ -19,7 +19,7 @@ const MovieList = ({data, loading, loadMore, like}) => {
         renderItem={item => (
             <List.Item>
                 <div className={styles.card} onClick={()=>router.push(`/movie/${item.id}`)}>
-                    <img className={styles.img} src={item.img && item.img.replace("w.h", '600.800')}/>
+                    <img className={styles.img} src={item.img && item.img.replace("w.h", '150.230')}/>
                     <div className={styles.name}>
                         {item.name || ''}
                     </div>

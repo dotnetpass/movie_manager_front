@@ -20,26 +20,33 @@ class Login extends React.PureComponent {
         })
     }
 
+    handleChange = ({file, fileList}) => {
+        const res = fileList.filter(e => e.status === 'done' && (e.origin || (!e.error && e.response && e.response.data && e.response.data.imgUrl)))
+            .map(e => e.origin ? e.url : e.response.data.imgUrl);
+        console.log(res)
+        this.setState({avatar_url: res[0]})
+    };
+
     render() {
         const uploadButton = (
             <div style={{width: 280, marginLeft: 0}}>
-                <Icon type='plus' />
+                <Icon type='plus'/>
                 <div className="ant-upload-text">上传头像</div>
             </div>
         );
         return <div className={styles.main}>
             <div className={styles.login}>用户注册</div>
             <div style={{width: 300}}>
-            <Upload
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                onChange={(e) => this.setState({avatar_url: e})}
-            >
-                {this.state.avatar_url ? <img src={this.state.avatarUrl} alt="avatar" /> : uploadButton}
-            </Upload>
+                <Upload
+                    name="avatar"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action="https://weapp.gene.xluyun.com/upload"
+                    onChange={this.handleChange}
+                >
+                    {this.state.avatar_url ? <img src={this.state.avatar_url} style={{width: 100, height: 100}}alt="avatar"/> : uploadButton}
+                </Upload>
             </div>
             <Input
                 size="large"
@@ -54,7 +61,7 @@ class Login extends React.PureComponent {
                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password"
                 placeholder="密码"
-                onChange={(e) => this.setState({nick: e.target.value})}
+                onChange={(e) => this.setState({password: e.target.value})}
             />
 
             <Button size="large" type="primary" onClick={this.handleSubmit} style={{width: 300}}>

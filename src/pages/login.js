@@ -35,7 +35,7 @@ class Login extends React.PureComponent {
                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 type="password"
                 placeholder="密码"
-                onChange={(e) => this.setState({nick: e.target.value})}
+                onChange={(e) => this.setState({password: e.target.value})}
             />
 
             <Button size="large" type="primary" onClick={this.handleSubmit} style={{width: 300}}>

@@ -21,6 +21,12 @@ class Forum extends PureComponent {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.id !== this.props.match.params.id) {
+            this.loadForum(nextProps.match.params.id);
+        }
+    }
+
     handleEditModalVisible = (flag) => {
         this.setState({
             editModalVisible: !!flag,

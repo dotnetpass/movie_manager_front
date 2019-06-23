@@ -1,5 +1,4 @@
-import {getMovie, listMovie, listComment, likeMovie, postComment, listLikedMovie} from '../services/api';
-import router from "umi/router";
+import {getMovie, likeMovie, listComment, listLikedMovie, listMovie, postComment} from '../services/api';
 
 export default {
     namespace: 'movie',
@@ -8,14 +7,14 @@ export default {
         data: [],
         current: {},
         loading: false,
-        pageSize: 12,
+        pageSize: 24,
         page: 1,
         totalPage: 1,
         count: 0,
         query: {
-            sort_by: 'scoreCount',
+            sort_by: 'score',
             query: '',
-            type: ''
+            type: 'name'
         },
         comments: {
             data: [],
@@ -44,7 +43,7 @@ export default {
                 payload: true,
             });
             const result = yield call(postComment, payload);
-            yield put({ type: 'fetchComment' });
+            yield put({type: 'fetchComment'});
             yield put({
                 type: 'changeLoading',
                 payload: false,
@@ -55,10 +54,22 @@ export default {
                 type: 'changeLoading',
                 payload: true,
             });
-            const result = yield call(listMovie, payload);
+            const {pageSize, page, query} = yield select(state => state.movie);
+            const newQuery = {
+                pageSize: payload && payload.pageSize ? payload.pageSize : pageSize,
+                page: payload && payload.page ? payload.page : page,
+                type: payload && payload.query && payload.query.type ? payload.query.type : query.type,
+                query: payload && payload.query && payload.query.query ? payload.query.query : query.query,
+                sort_by: payload && payload.query && payload.query.sort_by ? payload.query.sort_by : query.sort_by,
+            }
+            const result = yield call(listMovie, newQuery);
             yield put({
                 type: 'queryList',
-                payload: {...result, data: Array.isArray(result.data) ? result.data : []},
+                payload: {
+                    ...result, data: Array.isArray(result.data) ? result.data : [], query: {
+                        type: newQuery.type, query: newQuery.query, sort_by: newQuery.sort_by
+                    }
+                },
             });
             yield put({
                 type: 'changeLoading',
@@ -71,22 +82,22 @@ export default {
                 payload: true,
             });
             const result = yield call(listLikedMovie, payload);
-                yield put({
-                    type: 'queryList',
-                    payload: {...result, data: Array.isArray(result.data) ? result.data : []},
-                });
+            yield put({
+                type: 'queryList',
+                payload: {...result, data: Array.isArray(result.data) ? result.data : []},
+            });
             yield put({
                 type: 'changeLoading',
                 payload: false,
             });
         },
-        * fetchComment({ payload }, { call, put, select }) {
+        * fetchComment({payload}, {call, put, select}) {
             yield put({
                 type: 'changeLoading',
                 payload: true,
             });
-            const { pageSize, page } = yield select(state => state.movie.comments);
-            const { current } = yield select(state => state.movie);
+            const {pageSize, page} = yield select(state => state.movie.comments);
+            const {current} = yield select(state => state.movie);
             const result = yield call(listComment, {
                 pageSize: payload && payload.pageSize ? payload.pageSize : pageSize,
                 page: payload && payload.page ? payload.page : page,
@@ -94,7 +105,7 @@ export default {
             });
             yield put({
                 type: 'queryComment',
-                payload: { ...result, data: Array.isArray(result.data) ? result.data : [] },
+                payload: {...result, data: Array.isArray(result.data) ? result.data : []},
             });
             yield put({
                 type: 'changeLoading',
@@ -111,7 +122,7 @@ export default {
                 type: 'queryCurrent',
                 payload: {},
             });
-            let {data} = yield call(getMovie, {
+            let data = yield call(getMovie, {
                 id,
             });
             yield put({

@@ -58,6 +58,7 @@ export default {
             localStorage.removeItem("id")
             localStorage.removeItem("nick")
             localStorage.removeItem("avatar_url")
+            document.cookie = ''
             router.push('/')
         },
 
