@@ -164,7 +164,7 @@ class Movie extends PureComponent {
                                         </p>
 
                                     ]}
-                                    author={<a>{item.nick || '匿名用户'}</a>}
+                                    author={<a>{item.nick ? item.nick.substring(0,8): '匿名用户'}</a>}
                                     avatar={
                                         <Avatar
                                             src={item.avatarUrl}
@@ -176,7 +176,7 @@ class Movie extends PureComponent {
                                               style={{fontSize: 14}}/>
                                     }
                                     datetime={
-                                        <span>评价了 <a onClick={()=>router.push(`/movie/${item.movie_id}`)}>{item.movie}</a></span>
+                                        <span>评价了 <a onClick={()=>router.push(`/movie/${item.movie_id}`)}>{(item.movie||'').substring(0,8)}</a></span>
                                     }
                                 /></List.Item>
                         )}
@@ -206,7 +206,7 @@ class Movie extends PureComponent {
                                     <Comment
                                         className={styles.commentItem}
                                         key={item.id}
-                                        author={<a>{item.nick || '匿名用户'}</a>}
+                                        author={<a>{item.nick ? item.nick.substring(0,8): '匿名用户'}</a>}
                                         avatar={
                                             <Avatar
                                                 src={item.avatar}
@@ -219,7 +219,7 @@ class Movie extends PureComponent {
                                             </p>
                                         }
                                         datetime={
-                                            <span>发表于 <a onClick={()=>router.push(`/forum/${item.forum}`)}>{item.forum}</a></span>
+                                            <span>发表于 <a onClick={()=>router.push(`/forum/${item.forum}`)}>{(item.forum||'').substring(0,8)}</a></span>
                                         }
                                     /></List.Item>
                             )}
