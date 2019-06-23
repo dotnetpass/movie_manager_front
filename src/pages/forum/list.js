@@ -18,6 +18,11 @@ class Movie extends PureComponent {
         };
     }
 
+    handleEditInput = (name, e) => {
+        this.setState({
+            [name]: e
+        });
+    };
     componentDidMount() {
         this.loadForums();
     }
@@ -64,8 +69,11 @@ class Movie extends PureComponent {
             <div className={styles.content}>
                 <div className={styles.contentHeader}>
                     <PageHeader onBack={() => router.goBack()}
-                                title={`搜索讨论组 ${this.props.location.query.query}`}
+                                title={`搜索讨论组 ${this.props.location.query.query||''}`}
                                 subTitle={`共找到 ${forum.list.length || 0} 个讨论组`}/>
+                    <div className={styles.funcbarRight}>
+                        <Icon className={styles.func} onClick={()=>router.push('/forum/new?query='+this.props.location.query.query||'')} type="plus"/>
+                    </div>
 
                 </div>
                 <List
@@ -76,12 +84,16 @@ class Movie extends PureComponent {
                         md: 4,
                         lg: 4,
                         xl: 4,
-                        xxl: 6,
+                        xxl: 4,
                     }}
                     dataSource={forum.list}
                     renderItem={item => (
                         <List.Item>
-                            <Card>{item.name}</Card>
+                            <Card title={item.name} hoverable onClick={()=>router.push('/forum/'+item.id)}>
+                                <div style={{lineHeight:'20px', height: 40, marginBottom: 5}}>{item.description}</div>
+                                <Card.Meta
+                                    description={`创建者：${item.nick}`}
+                                /></Card>
                         </List.Item>
                     )}
                 />,

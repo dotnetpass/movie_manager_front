@@ -1,4 +1,12 @@
-import {createForum, getForum, likeForum, listDiscussion, listLikedForum, postDiscussion, getForumList} from '../services/api';
+import {
+    createForum,
+    getForum,
+    getForumList,
+    likeForum,
+    listDiscussion,
+    listLikedForum,
+    postDiscussion
+} from '../services/api';
 import router from 'umi/router';
 
 export default {
@@ -47,7 +55,7 @@ export default {
             const result = yield call(getForum, payload);
             yield put({
                 type: 'query',
-                payload: result,
+                payload: {...result, ...payload},
             });
             yield put({
                 type: 'changeLoading',
@@ -60,10 +68,10 @@ export default {
                 payload: true,
             });
             const result = yield call(listLikedForum, payload);
-                yield put({
-                    type: 'queryList',
-                    payload: Array.isArray(result.data) ? result.data : []
-                });
+            yield put({
+                type: 'queryList',
+                payload: Array.isArray(result.data) ? result.data : []
+            });
             yield put({
                 type: 'changeLoading',
                 payload: false,
@@ -74,7 +82,7 @@ export default {
                 type: 'changeLoading',
                 payload: true,
             });
-            const result = yield call(getForumList, payload);
+            const data = yield call(getForumList, payload);
             yield put({
                 type: 'queryList',
                 payload: Array.isArray(data) ? data : []
@@ -92,8 +100,8 @@ export default {
                 payload: true,
             });
             const result = yield call(createForum, payload);
-            if (result.id)
-                router.push('/forum/' + result.id)
+            if (result)
+                router.push('/forum/' + result)
             yield put({
                 type: 'changeLoading',
                 payload: false,
@@ -123,17 +131,10 @@ export default {
 
     reducers: {
         query(state, action) {
-            if (action.payload.page === 1)
-                return {
-                    ...state,
-                    ...action.payload,
-                };
-            else
-                return {
-                    ...state,
-                    ...action.payload,
-                    discussions: [...state.discussions, ...action.payload.discussions]
-                };
+            return {
+                ...state,
+                data: action.payload,
+            }
         },
         queryList(state, action) {
             return {

@@ -217,7 +217,7 @@ class Forum extends PureComponent {
                             </div>
                             <div className={styles.infoItem}>
                                 <div className={styles.left}>创建者</div>
-                                <div className={styles.right}>{forum.data.publisher || 'N/A'}</div>
+                                <div className={styles.right}>{forum.data.nick || 'N/A'}</div>
                             </div>
                             <div className={styles.infoItem}>
                                 <div className={styles.left}>简介</div>
