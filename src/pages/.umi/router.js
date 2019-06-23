@@ -33,6 +33,11 @@ const routes = [
         "component": require('../exception/500.js').default
       },
       {
+        "path": "/forum/list",
+        "exact": true,
+        "component": require('../forum/list.js').default
+      },
+      {
         "path": "/forum/my",
         "exact": true,
         "component": require('../forum/my.js').default

@@ -42,7 +42,7 @@ class Movie extends PureComponent {
 
     handleSearchForum = () => {
         //this.loadMovies(1,12,this.state.type, this.state.query)
-        router.push(`/forum/${this.state.query}`)
+        router.push(`/forum/list?query=${this.state.query}`)
     }
 
     componentDidMount() {
@@ -99,7 +99,7 @@ class Movie extends PureComponent {
                         <div className={this.state.searchFor === 'movie' ? styles.active : null}>检索电影</div>
                     </div>
                     <div className={styles.searchItem} onClick={() => this.handleEditInput('searchFor', 'forum')}>
-                        <div className={this.state.searchFor === 'forum' ? styles.active : null}>进入讨论组</div>
+                        <div className={this.state.searchFor === 'forum' ? styles.active : null}>搜索讨论组</div>
                     </div>
                 </div>
 

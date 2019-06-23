@@ -60,7 +60,7 @@ class Forum extends PureComponent {
 
     handleSearch = () => {
         //this.loadMovies(1,12,this.state.type, this.state.query)
-        router.push(`/forum/${this.state.query || (this.props.forum.data && this.props.forum.data.name) || ''}`)
+        router.push(`/forum/list?query=${this.state.query || (this.props.forum.data && this.props.forum.data.name) || ''}`)
     };
 
     componentDidMount() {
@@ -180,7 +180,7 @@ class Forum extends PureComponent {
                 </div>
                 <div className={styles.headerContent}>
                     <div className={styles.search}>
-                        进入讨论组
+                        搜索讨论组
                     </div>
 
                     <div className={styles.searchBar}>

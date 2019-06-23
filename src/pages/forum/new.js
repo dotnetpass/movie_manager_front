@@ -33,7 +33,7 @@ class Forum extends PureComponent {
     };
 
     handleSearch = () => {
-        router.push(`/forum/${this.state.query || ''}`)
+        router.push(`/forum/list?query=${this.state.query || ''}`)
     };
 
     handleCreate = () => {
@@ -54,7 +54,7 @@ class Forum extends PureComponent {
                 </div>
                 <div className={styles.headerContent}>
                     <div className={styles.search}>
-                        进入讨论组
+                        搜索讨论组
                     </div>
 
                     <div className={styles.searchBar}>

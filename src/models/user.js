@@ -1,4 +1,4 @@
-import {login, register} from '../services/api';
+import {flogin, fregister, flogout} from '../services/api';
 import router from 'umi/router';
 
 export default {
@@ -16,7 +16,7 @@ export default {
                 type: 'changeLoading',
                 payload: true,
             });
-            let result = yield call(login, payload);
+            let result = JSON.parse(yield call(flogin, payload));
             yield put({
                 type: 'queryCurrent',
                 payload: result,
@@ -31,12 +31,13 @@ export default {
 
             router.push('/')
         },
+
         * register({payload}, {call, put}) {
             yield put({
                 type: 'changeLoading',
                 payload: true,
             });
-            let result = yield call(register, payload);
+            let result = JSON.parse(yield call(fregister, payload));
             yield put({
                 type: 'queryCurrent',
                 payload: result,
@@ -58,8 +59,9 @@ export default {
             localStorage.removeItem("id")
             localStorage.removeItem("nick")
             localStorage.removeItem("avatar_url")
-            document.cookie = ''
+            yield call(flogout)
             router.push('/')
+
         },
 
     },

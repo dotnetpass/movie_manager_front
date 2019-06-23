@@ -1,4 +1,4 @@
-import {createForum, getForum, likeForum, listDiscussion, listLikedForum, postDiscussion} from '../services/api';
+import {createForum, getForum, likeForum, listDiscussion, listLikedForum, postDiscussion, getForumList} from '../services/api';
 import router from 'umi/router';
 
 export default {
@@ -69,6 +69,23 @@ export default {
                 payload: false,
             });
         },
+        * fetchList({payload}, {call, put, select}) {
+            yield put({
+                type: 'changeLoading',
+                payload: true,
+            });
+            const result = yield call(getForumList, payload);
+            yield put({
+                type: 'queryList',
+                payload: Array.isArray(data) ? data : []
+            });
+            yield put({
+                type: 'changeLoading',
+                payload: false,
+            });
+        },
+
+
         * create({payload}, {call, put, select}) {
             yield put({
                 type: 'changeLoading',
